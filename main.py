@@ -1,9 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Dict, Any
 import requests
-import json
-import csv
-import yaml
 import io
 
 class CurrenciesProvider(ABC):
@@ -57,6 +54,8 @@ class CurrenciesProviderJSON(CurrenciesProvider):
         Args:
             filename (str): Имя файла для сохранения.
         """
+        import json
+        
         data = self.get_currencies()
         with open(filename, "w", encoding="utf-8") as file:
             json.dump(data, file, indent=4, ensure_ascii=False)
@@ -118,6 +117,8 @@ class CSVDecorator(CurrenciesDecorator):
         Returns:
             Dict[str, Any]: Словарь с CSV-представлением данных.
         """
+        import csv 
+        
         data = self.provider.get_currencies()
         valutes = data["Valute"]
 
@@ -165,6 +166,8 @@ class YAMLDecorator(CurrenciesDecorator):
         Returns:
             Dict[str, Any]: Словарь с YAML-представлением данных.
         """
+        import yaml 
+        
         data = self.provider.get_currencies()
         yaml_text = yaml.dump(data, allow_unicode=True, sort_keys=False)
         return {
