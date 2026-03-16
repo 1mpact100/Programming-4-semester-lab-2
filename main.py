@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from typing import Dict, Any
-import requests
 import io
 
 class CurrenciesProvider(ABC):
@@ -43,6 +42,8 @@ class CurrenciesProviderJSON(CurrenciesProvider):
         Returns:
             Dict[str, Any]: Полученные данные.
         """
+        import requests 
+        
         response = requests.get(self.url)
         response.raise_for_status()
         return response.json()
